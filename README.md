@@ -4,12 +4,8 @@
 
 ---
 
-- [](https://github.com/HxScript)
+- [GitHub](https://github.com/HxScript)
 
 - ```bash
   git clone https://github.com/HxScript.git
   ```
-
-
-
-
