@@ -4,8 +4,8 @@
 
 ---
 
-- [GitHub](https://github.com/HxScript)
+- [GitHub](https://github.com/ys452188/HxScript)
 
 - ```bash
-  git clone https://github.com/HxScript.git
+  git clone https://github.com/ys452188/HxScript.git
   ```
