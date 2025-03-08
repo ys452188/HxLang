@@ -1,0 +1,1 @@
+/data/data/com.termux/files/usr/bin/gcc -O2 -g -DNDEBUG -Xlinker --dependency-file=CMakeFiles/HxScript.dir/link.d CMakeFiles/HxScript.dir/src/Main.c.o -o HxScript

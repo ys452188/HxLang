@@ -81,9 +81,9 @@ bool parser_defineVariable(const wchar_t* command_o) {
         }
         wcsncpy(variable,variableBegin,variableLength);
         variable[variableLength] = L'\0';
-
-        fwprintf(stdout,L"%ls",variable);
-
+		/********************************/
+        fwprintf(stdout,L"定义的变量：%ls\n",variable);
+		/********************************/
         free(command);
         free(variable);
         return true;

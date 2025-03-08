@@ -1,0 +1,3 @@
+/storage/emulated/0/Android/data/com.cjkj.clanide/files/CJ_IDE/CProject/默认目录/HxScript/build/CMakeFiles/HxScript.dir
+/storage/emulated/0/Android/data/com.cjkj.clanide/files/CJ_IDE/CProject/默认目录/HxScript/build/CMakeFiles/edit_cache.dir
+/storage/emulated/0/Android/data/com.cjkj.clanide/files/CJ_IDE/CProject/默认目录/HxScript/build/CMakeFiles/rebuild_cache.dir
