@@ -15,7 +15,7 @@ static long long variableCount = 0;
 void initVariableSymbolTable(void) {
     variableSymbolTable = (Variable*)malloc(sizeof(Variable));
     if(!variableSymbolTable) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         return;
     }
@@ -28,13 +28,13 @@ void defineVariable(
     double value) {
     Variable* newVariable = (Variable*)malloc(sizeof(Variable));
     if(!newVariable) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         return;
     }
     newVariable-> name = (wchar_t*)malloc(sizeof(wchar_t)*(wcslen(name)+1));
     if(!newVariable-> name) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         free(newVariable);
         return;
@@ -42,7 +42,7 @@ void defineVariable(
     wcscpy(newVariable->name,name);
     newVariable-> type = (wchar_t*)malloc(sizeof(wchar_t)*(wcslen(type)+1));
     if(!newVariable-> type) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         free(newVariable->name);
         free(newVariable);
@@ -52,7 +52,7 @@ void defineVariable(
     if(wcscmp(newVariable->type,L"int") == 0) {
         newVariable->address = malloc(sizeof(int));
         if(!newVariable->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newVariable->name);
             free(newVariable->type);
@@ -63,7 +63,7 @@ void defineVariable(
     } else if(wcscmp(newVariable->type,L"float") == 0) {
         newVariable->address = malloc(sizeof(float));
         if(!newVariable->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newVariable->name);
             free(newVariable->type);
@@ -74,7 +74,7 @@ void defineVariable(
     } else if(wcscmp(newVariable->type,L"double") == 0) {
         newVariable->address = malloc(sizeof(double));
         if(!newVariable->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newVariable->name);
             free(newVariable->type);
@@ -85,7 +85,7 @@ void defineVariable(
     } else if(wcscmp(newVariable->type,L"char") == 0) {
         newVariable->address = malloc(sizeof(wchar_t));   //为支持unicode,这里使用宽字符
         if(!newVariable->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newVariable->name);
             free(newVariable->type);
@@ -96,7 +96,7 @@ void defineVariable(
     } else if(wcscmp(newVariable->type,L"bool") == 0) {
         newVariable->address = malloc(sizeof(bool));
         if(!newVariable->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newVariable->name);
             free(newVariable->type);
@@ -105,7 +105,7 @@ void defineVariable(
         }
         *(bool*)newVariable->address = hasValue? (bool)value:true;
     } else {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",RUN_ERROR_UNKNOWN_TYPE);
         free(newVariable->name);
         free(newVariable->type);
@@ -119,7 +119,7 @@ void defineVariable(
     variableCount++;
     void* temp = realloc(variableSymbolTable,sizeof(Variable)*variableCount);
     if(!temp) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         variableCount--;
         return;
@@ -131,7 +131,7 @@ void defineVariable(
 }
 double getVariableValue(const wchar_t* name) {
     if(variableSymbolTable == NULL) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_NULL_SYMBOL);
         return NAN;
     }

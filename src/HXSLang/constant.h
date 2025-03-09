@@ -15,7 +15,7 @@ static long long constantCount = 0;
 void initConstantSymbolTable(void) {
     constantSymbolTable = (Constant*)malloc(sizeof(Constant));
     if(!constantSymbolTable) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         return;
     }
@@ -28,13 +28,13 @@ void defineConstant(
     double value) {
     Constant* newConstant = (Constant*)malloc(sizeof(Constant));
     if(!newConstant) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         return;
     }
     newConstant-> name = (wchar_t*)malloc(sizeof(wchar_t)*(wcslen(name)+1));
     if(!newConstant-> name) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         free(newConstant);
         return;
@@ -42,7 +42,7 @@ void defineConstant(
     wcscpy(newConstant->name,name);
     newConstant-> type = (wchar_t*)malloc(sizeof(wchar_t)*(wcslen(type)+1));
     if(!newConstant-> type) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         free(newConstant->name);
         free(newConstant);
@@ -52,7 +52,7 @@ void defineConstant(
     if(wcscmp(newConstant->type,L"int") == 0) {
         newConstant->address = malloc(sizeof(int));
         if(!newConstant->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newConstant->name);
             free(newConstant->type);
@@ -63,7 +63,7 @@ void defineConstant(
     } else if(wcscmp(newConstant->type,L"float") == 0) {
         newConstant->address = malloc(sizeof(float));
         if(!newConstant->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newConstant->name);
             free(newConstant->type);
@@ -74,7 +74,7 @@ void defineConstant(
     } else if(wcscmp(newConstant->type,L"double") == 0) {
         newConstant->address = malloc(sizeof(double));
         if(!newConstant->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newConstant->name);
             free(newConstant->type);
@@ -85,7 +85,7 @@ void defineConstant(
     } else if(wcscmp(newConstant->type,L"char") == 0) {
         newConstant->address = malloc(sizeof(wchar_t));   //为支持unicode,这里使用宽字符
         if(!newConstant->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newConstant->name);
             free(newConstant->type);
@@ -96,7 +96,7 @@ void defineConstant(
     } else if(wcscmp(newConstant->type,L"bool") == 0) {
         newConstant->address = malloc(sizeof(bool));
         if(!newConstant->address) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newConstant->name);
             free(newConstant->type);
@@ -105,7 +105,7 @@ void defineConstant(
         }
         *(bool*)newConstant->address = hasValue? (bool)value:true;
     } else {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",RUN_ERROR_UNKNOWN_TYPE);
         free(newConstant->name);
         free(newConstant->type);
@@ -119,7 +119,7 @@ void defineConstant(
     constantCount++;
     void* temp = realloc(constantSymbolTable,sizeof(Constant)*constantCount);
     if(!temp) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         constantCount--;
         return;
@@ -131,13 +131,14 @@ void defineConstant(
 }
 double getConstantValue(const wchar_t* name) {
     if(constantSymbolTable == NULL) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_NULL_SYMBOL);
         return NAN;
     }
     for(long long i=0; i < constantCount; i++) {
         if(wcscmp(constantSymbolTable[i].name,name) == 0) {
             if (constantSymbolTable[i].address == NULL) {
+                setlocale(LC_ALL,"chinese");
                 fwprintf(stderr, L"错误：常量 %ls 未初始化！\n", name);
                 return NAN;
             }

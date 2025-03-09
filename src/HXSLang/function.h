@@ -22,7 +22,7 @@ typedef struct {
 void initFunctionSymbolTable(void) {
     functionSymbolTable = (Function*)malloc(sizeof(Function));
     if(!functionSymbolTable) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         return;
     }
@@ -37,13 +37,13 @@ void defineFunction(
 ) {
     Function *newFunction = (Function*)malloc(sizeof(Function));
     if(!newFunction) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         return;
     }
     newFunction->name = (wchar_t*)malloc(sizeof(wchar_t)*(wcslen(name)+1));
     if(!newFunction->name) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         free(newFunction);
         return;
@@ -51,7 +51,7 @@ void defineFunction(
     wcscpy(newFunction->name,name);
     newFunction->returnType = (wchar_t*)malloc(sizeof(wchar_t)*(wcslen(returnType)+1));
     if(!newFunction->returnType) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         free(newFunction->name);
         free(newFunction);
@@ -66,7 +66,7 @@ void defineFunction(
     }
     newFunction->argsName = (wchar_t**)malloc(sizeof(wchar_t*)*argsNameCount);
     if(!argsName) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         free(newFunction->name);
         free(newFunction->returnType);
@@ -76,7 +76,7 @@ void defineFunction(
     for(int i = 0; i < argsNameCount; i++) {
         newFunction->argsName[i] = (wchar_t*)malloc(sizeof(wchar_t)*wcslen(argsName[i]));
         if(!argsName[i]) {
-            setlocale(LC_ALL,"C");
+            setlocale(LC_ALL,"chinese");
             fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
             free(newFunction->name);
             free(newFunction->returnType);
@@ -86,7 +86,7 @@ void defineFunction(
         }
         wcscpy(newFunction->argsName[i],argsName[i]);
         /*********************************/
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stdout,L"参数%d：%ls\n",i+1,newFunction->argsName[i]);
         /*********************************/
     }
@@ -97,7 +97,7 @@ void defineFunction(
     functionCount++;
     void* temp = realloc(functionSymbolTable,sizeof(Function)*functionCount);
     if(!temp) {
-        setlocale(LC_ALL,"C");
+        setlocale(LC_ALL,"chinese");
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
         functionCount--;
         return;
