@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
         L"int",L"int",L"int",NULL
     },
     L"arg3 = arg2+arg1;return arg3;");
-    setlocale(LC_ALL,"chinese");
+    setlocale(LC_ALL,"zh_CN.UTF-8");
     wprintf(L"var1 = %d, a = %d,var2 = \'%c\'\n",(int)getValue(L"var1"),(int)getValue(L"a"),(wchar_t)getValue(L"var2"));
     wprintf(L"是否定义变量：%d\n",parser_defineVariable(L"定义变量 a = b"));
     cleanupSymbol();

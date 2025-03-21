@@ -1,0 +1,3 @@
+D:/HxScript/build/CMakeFiles/HxScript.dir
+D:/HxScript/build/CMakeFiles/edit_cache.dir
+D:/HxScript/build/CMakeFiles/rebuild_cache.dir

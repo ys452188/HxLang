@@ -14,7 +14,7 @@ double getValue(const wchar_t* name) {
     } else if(!isnan(getVariableValue(name))) { 
         return getVariableValue(name);
     } else {
-        setlocale(LC_ALL,"chinese");
+        setlocale(LC_ALL,"zh_CN.UTF-8");
     	fwprintf(stderr,L"%ls",RUN_ERROR_UNDEFINED_VARIABLE);
     }
     return NAN;

@@ -1,0 +1,3 @@
+D:\CMake\bin\cmake.exe -E rm -f CMakeFiles\HxScript.dir/objects.a
+D:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\HxScript.dir/objects.a @CMakeFiles\HxScript.dir\objects1.rsp
+D:\msys64\ucrt64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\HxScript.dir/objects.a -Wl,--no-whole-archive -o HxScript.exe -Wl,--out-implib,libHxScript.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\HxScript.dir\linkLibs.rsp
