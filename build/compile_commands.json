@@ -1,8 +1,0 @@
-[
-{
-  "directory": "D:/HxScript/build",
-  "command": "D:\\msys64\\ucrt64\\bin\\gcc.exe   -g -std=gnu99 -o CMakeFiles\\HxScript.dir\\src\\Main.c.obj -c D:\\HxScript\\src\\Main.c",
-  "file": "D:/HxScript/src/Main.c",
-  "output": "CMakeFiles/HxScript.dir/src/Main.c.obj"
-}
-]

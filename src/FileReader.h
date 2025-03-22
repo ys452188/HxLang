@@ -35,6 +35,7 @@ int getLine(wchar_t* obj_str) {
 wchar_t** getCommamdFromSourceFile(const char* path) {
     setlocale(LC_ALL,"zh_CN.UTF-8");
     int rows = 1;                  //行数、命令数
+    //分配初始行数
     wchar_t** commands = (wchar_t**)malloc(sizeof(wchar_t*)*rows);
     if(!commands) {
         fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
@@ -46,37 +47,45 @@ wchar_t** getCommamdFromSourceFile(const char* path) {
         free(commands);
         return NULL;
     }
-    size_t capacity = 8;
-    wchar_t ch;
-    int index = 0;
+    size_t capacity = 8;              //每次扩容
+    wchar_t ch;                       //临时字符
     bool hasDoubleQuote = false;      //是否有双引号括起
-    commands = (wchar_t*)malloc(sizeof(wchar_t)*(index+1));
-    if(!commands) {
-        fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
-        fclose(fp);
-        return NULL;
-    }
+    bool hasHuaKuoHao = false;        //是否有花括号括起
+    int count = 0;
     while((ch = fgetwc(fp)) != WEOF) {
-        if(ch == L'\"') {
-            //判断双引号前是否有反斜杠
-            if(wcslen(commands[rows-1]) > 0) {
-                if(commands[rows-1][index] == L'\\') {
-                    index++;
-                    commands[rows-1][index] = ch;
-                    continue;
-                }
-            } else {
-                if(!hasDoubleQuote) hasDoubleQuote = true;
-                if(hasDoubleQuote) hasDoubleQuote = false;
+        //初始化
+        if(commands[rows-1] == NULL) {
+            commands[rows-1] = (wchar_t*)malloc(sizeof(wchar_t)*capacity);
+            if(!commands[rows-1]) {
+                free(commands);
+                fclose(fp);
+                fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
+                return NULL;
             }
         }
-        if(hasDoubleQuote) {
-            commands[rows-1][index] = ch;
-            index++;
-            commands[rows-1] = (wchar_t*)realloc(commands[rows-1],sizeof(wchar_t)*(index+1));
-            continue;
+        //调整大小
+        if(count+1 >= capacity) {
+            capacity *= 2;
+            wchar_t* temp = (wchar_t*)realloc(commands[rows-1], sizeof(wchar_t) * capacity);
+            if (!temp) {
+                free(commands);
+                fclose(fp);
+                fwprintf(stderr,L"%ls",SYSTEM_ERROR_MEMORY_MALLOC);
+                setlocale(LC_ALL, NULL);
+                return NULL;
+            }commands[rows-1] = temp;
         }
-		
+        if(ch == L'\"') {
+            //检查count，防止越界
+           if(count == 0) {
+                commands[rows-1][count] = ch;
+                hasDoubleQuote = true;
+                continue;
+
+
+                
+           } 
+        }
     }
     fclose(fp);
     return commands;
