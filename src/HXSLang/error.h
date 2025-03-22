@@ -1,6 +1,7 @@
 #ifndef __HXSCRIPT_SRC_HXSLANG_ERROR_H__
 #define SYSTEM_ERROR_MEMORY_MALLOC L"\033[38;2;255;0;0m错误：内存分配失败！\033[0m\n"
 #define SYSTEM_ERROR_MEMORY_NULL_SYMBOL L"\033[38;2;255;0;0m错误：符号表为空！\033[0m\n"
+#define SYSTEM_ERROR_FILE_OPEN L"\033[38;2;255;0;0m错误：文件打开失败！\033[0m\n"
 #define RUN_ERROR_UNKNOWN_TYPE L"\033[38;2;255;0;0m运行错误：未知类型！\033[0m\n"
 #define RUN_ERROR_UNDEFINED_VARIABLE L"\033[38;2;255;0;0m运行错误：未定义的变量！\033[0m\n"
 #define RUN_ERROR_UNDEFINED_CONSTANT L"\033[38;2;255;0;0m运行错误：未定义的常量！\033[0m\n"
