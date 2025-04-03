@@ -1,7 +1,7 @@
-/*æ•°æ®ç»“æ„*/
+/*Êı¾İ½á¹¹*/
 #ifndef __HXLANG_SRC_HXC_DATASTRUCT_H__
 #define __HXLANG_SRC_HXC_DATASTRUCT_H__
-/*ç±»å‹ç¼–å·*/
+/*ÀàĞÍ±àºÅ*/
 #define HXC_TYPE_INT 1
 #define HXC_TYPE_FLOAT 2
 #define HXC_TYPE_DOUBLE 3
@@ -9,46 +9,62 @@
 #define HXC_TYPE_UNICODE 5
 #define HXC_TYPE_STR 6
 #define HXC_TYPE_BOOL 7
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <wchar.h>
 #include <stdbool.h>
-long int varCount = 0;     /*å˜é‡è®¡æ•°*/
-long int conCount = 0;     /*å¸¸é‡è®¡æ•°*/
-long int funCount = 0;     /*å‡½æ•°è®¡æ•°*/
-int initSymbol(void);       /*åˆå§‹åŒ–ç¬¦å·è¡¨ï¼Œå¤±è´¥åˆ™è¿”å›-1*/
-void cleanupSymbol(void);   /*æ¸…ç†ç¬¦å·è¡¨*/
-typedef struct {       /*å˜é‡*/
-    wchar_t* name;     /*å˜é‡å*/
-    int type;          /*å˜é‡ç±»å‹*/
-    void* address;     /*åœ°å€*/
+/****************************************************************************************************/
+long int varCount = 0;     /*±äÁ¿¼ÆÊı*/
+long int conCount = 0;     /*³£Á¿¼ÆÊı*/
+long int funCount = 0;     /*º¯Êı¼ÆÊı*/
+int initSymbol(void);      /*³õÊ¼»¯·ûºÅ±í£¬Ê§°ÜÔò·µ»Ø-1*/
+int addVariable(const wchar_t* name,const int type,const double value);  /*Ìí¼Ó±äÁ¿µ½·ûºÅ±í£¬Ê§°ÜÔò·µ»Ø-1*/
+int addConstant(const wchar_t* name,const int type,const double value);  /*Ìí¼Ó³£Á¿µ½·ûºÅ±í£¬Ê§°ÜÔò·µ»Ø-1*/
+int addFunction(const wchar_t* name,
+    const wchar_t** argsName,
+    const int returnType,
+    const int* argsType,
+    const wchar_t* body);        /*Ìí¼Óº¯Êıµ½·ûºÅ±í£¬Ê§°ÜÔò·µ»Ø-1*/
+bool isVariableExist(wchar_t* name);  /*ÅĞ¶Ï±äÁ¿ÊÇ·ñ´æÔÚ£¬´æÔÚÔò·µ»Øtrue*/
+bool isConstantExist(wchar_t* name);  /*ÅĞ¶Ï³£Á¿ÊÇ·ñ´æÔÚ£¬´æÔÚÔò·µ»Øtrue*/
+bool isFunctionExist(wchar_t* name,const int* argsType);  /*ÅĞ¶Ïº¯ÊıÊÇ·ñ´æÔÚ£¬´æÔÚÔò·µ»Øtrue*/
+double getVariableValue(const wchar_t* name);  /*»ñÈ¡±äÁ¿µÄÖµ*/
+double getConstantValue(const wchar_t* name);  /*»ñÈ¡³£Á¿µÄÖµ*/
+void cleanupSymbol(void);   /*ÇåÀí·ûºÅ±í*/
+/***************************************************************************************************/
+typedef struct {       /*±äÁ¿*/
+    wchar_t* name;     /*±äÁ¿Ãû*/
+    int type;          /*±äÁ¿ÀàĞÍ*/
+    void* address;     /*µØÖ·*/
 } Variable;
-Variable* variableSymbolTable = NULL;  /*å˜é‡ç¬¦å·è¡¨*/
-typedef struct {       /*å¸¸é‡*/
-    wchar_t* name;     /*å¸¸é‡å*/
-    int type;          /*å¸¸é‡ç±»å‹*/
-    void* address;     /*åœ°å€*/
+Variable* variableSymbolTable = NULL;  /*±äÁ¿·ûºÅ±í*/
+typedef struct {       /*³£Á¿*/
+    wchar_t* name;     /*³£Á¿Ãû*/
+    int type;          /*³£Á¿ÀàĞÍ*/
+    void* address;     /*µØÖ·*/
 } Constant;
-Constant* constantSymbolTable = NULL;  /*å¸¸é‡ç¬¦å·è¡¨*/
-typedef struct {       /*å‡½æ•°*/
-    wchar_t* name;     /*å‡½æ•°å*/
-    wchar_t** argsName;/*å‚æ•°å*/
-    int* returnType;   /*åå›ç±»å‹*/
-    int* argsType;     /*å‚æ•°ç±»å‹*/
-    wchar_t* body;     /*å‡½æ•°ä½“*/
+Constant* constantSymbolTable = NULL;  /*³£Á¿·ûºÅ±í*/
+typedef struct {       /*º¯Êı*/
+    wchar_t* name;     /*º¯ÊıÃû*/
+    wchar_t** argsName;/*²ÎÊıÃû*/
+    int returnType;   /*·´»ØÀàĞÍ*/
+    int* argsType;     /*²ÎÊıÀàĞÍ*/
+    wchar_t* body;     /*º¯ÊıÌå*/
 } Function;
-Function* functionSymbolTable = NULL;  /*å‡½æ•°ç¬¦å·è¡¨*/
+Function* functionSymbolTable = NULL;  /*º¯Êı·ûºÅ±í*/
+/**************************************************************************************************/
 int initSymbol(void) {
     if(variableSymbolTable == NULL) {
         variableSymbolTable = (Variable*)malloc(sizeof(Variable)*1);
         if(!variableSymbolTable) {
-            /*è·¨å¹³å°çš„é¢œè‰²å˜æ¢*/
+            /*¿çÆ½Ì¨µÄÑÕÉ«±ä»»*/
             #ifdef _WIN32
             system("COLOR C");
-            fprintf(stderr,"[E]å†…å­˜åˆ†é…å¤±è´¥ï¼\n");
+            fprintf(stderr,"[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
             system("COLOR");
             #else
-            fprintf(stderr,"\033[38;2;255;0;0m[E]å†…å­˜åˆ†é…å¤±è´¥ï¼\033[0m\n");
+            fprintf(stderr,"\033[38;2;255;0;0m[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\033[0m\n");
             #endif
             return -1;
         }
@@ -56,13 +72,13 @@ int initSymbol(void) {
     if(constantSymbolTable == NULL) {
         constantSymbolTable = (Constant*)malloc(sizeof(Constant)*1);
         if(!constantSymbolTable) {
-            /*è·¨å¹³å°çš„é¢œè‰²å˜æ¢*/
+            /*¿çÆ½Ì¨µÄÑÕÉ«±ä»»*/
             #ifdef _WIN32
             system("COLOR C");
-            fprintf(stderr,"[E]å†…å­˜åˆ†é…å¤±è´¥ï¼\n");
+            fprintf(stderr,"[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
             system("COLOR");
             #else
-            fprintf(stderr,"\033[38;2;255;0;0m[E]å†…å­˜åˆ†é…å¤±è´¥ï¼\033[0m\n");
+            fprintf(stderr,"\033[38;2;255;0;0m[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\033[0m\n");
             #endif
             return -1;
         }
@@ -70,13 +86,13 @@ int initSymbol(void) {
     if(functionSymbolTable == NULL) {
         functionSymbolTable = (Function*)malloc(sizeof(Function)*1);
         if(!functionSymbolTable) {
-            /*è·¨å¹³å°çš„é¢œè‰²å˜æ¢*/
+            /*¿çÆ½Ì¨µÄÑÕÉ«±ä»»*/
             #ifdef _WIN32
             system("COLOR C");
-            fprintf(stderr,"[E]å†…å­˜åˆ†é…å¤±è´¥ï¼\n");
+            fprintf(stderr,"[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
             system("COLOR");
             #else
-            fprintf(stderr,"\033[38;2;255;0;0m[E]å†…å­˜åˆ†é…å¤±è´¥ï¼\033[0m\n");
+            fprintf(stderr,"\033[38;2;255;0;0m[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\033[0m\n");
             #endif
             return -1;
         }
@@ -108,7 +124,6 @@ void cleanupSymbol(void) {
         return;
     } else {
         for(long int i = 0; i < funCount;i++) {
-            free(functionSymbolTable[i].returnType);
             free(functionSymbolTable[i].body);
             free(functionSymbolTable[i].name);
             free(functionSymbolTable[i].argsType);
@@ -117,5 +132,91 @@ void cleanupSymbol(void) {
         free(functionSymbolTable);
     }
     return;
+}
+int addVariable(const wchar_t* name,const int type,const double value) {
+    Variable* newVar = (Variable*)malloc(sizeof(Variable));
+    if(!newVar) {
+        /*¿çÆ½Ì¨µÄÑÕÉ«±ä»»*/
+        #ifdef _WIN32
+        system("COLOR C");
+        fprintf(stderr,"[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
+        system("COLOR");
+        #else
+        fprintf(stderr,"\033[38;2;255;0;0m[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\033[0m\n");
+        #endif
+        return -1;
+    }
+    newVar->name = (wchar_t*)malloc(sizeof(wchar_t)*(wcslen(name)+1));
+    if(!newVar->name) {
+        /*¿çÆ½Ì¨µÄÑÕÉ«±ä»»*/
+        #ifdef _WIN32
+        system("COLOR C");
+        fprintf(stderr,"[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
+        system("COLOR");
+        #else
+        fprintf(stderr,"\033[38;2;255;0;0m[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\033[0m\n");
+        #endif
+        free(newVar);
+        return -1;
+    }
+    int flag = wcscpy_s(newVar->name,sizeof(newVar->name),name);
+    if(flag != 0) {
+        /*¿çÆ½Ì¨µÄÑÕÉ«±ä»»*/
+        #ifdef _WIN32
+        system("COLOR C");
+        fprintf(stderr,"[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
+        system("COLOR");
+        #else
+        fprintf(stderr,"\033[38;2;255;0;0m[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\033[0m\n");
+        #endif
+        free(newVar->name);
+        free(newVar);
+        return -1;
+    }
+    newVar->type = type;
+    newVar->address = malloc(sizeof(double));
+    if(!newVar->address) {
+        /*¿çÆ½Ì¨µÄÑÕÉ«±ä»»*/
+        #ifdef _WIN32
+        system("COLOR C");
+        fprintf(stderr,"[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
+        system("COLOR");
+        #else
+        fprintf(stderr,"\033[38;2;255;0;0m[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\033[0m\n");
+        #endif
+        free(newVar->name);
+        free(newVar);
+        return -1;
+    }
+    *(double*)newVar->address = value;
+    variableSymbolTable = (Variable*)realloc(variableSymbolTable,sizeof(Variable)*(varCount+1));
+    if(!variableSymbolTable) {
+        /*¿çÆ½Ì¨µÄÑÕÉ«±ä»»*/
+        #ifdef _WIN32
+        system("COLOR C");
+        fprintf(stderr,"[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
+        system("COLOR");
+        #else
+        fprintf(stderr,"\033[38;2;255;0;0m[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\033[0m\n");
+        #endif
+        free(newVar->name);
+        free(newVar->address);
+        free(newVar);
+        return -1;
+    }
+    variableSymbolTable[varCount] = *newVar;
+    free(newVar->name);
+    free(newVar->address);
+    free(newVar);
+    varCount++;
+    return 0;
+}
+double getVariableValue(const wchar_t* name) {
+    for(long int i = 0; i < varCount;i++) {
+        if(wcscmp(variableSymbolTable[i].name,name) == 0) {
+            return *(double*)variableSymbolTable[i].address;
+        }
+    }
+    return NAN;
 }
 #endif
