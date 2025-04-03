@@ -159,20 +159,7 @@ int addVariable(const wchar_t* name,const int type,const double value) {
         free(newVar);
         return -1;
     }
-    int flag = wcscpy_s(newVar->name,sizeof(newVar->name),name);
-    if(flag != 0) {
-        /*¿çÆ½Ì¨µÄÑÕÉ«±ä»»*/
-        #ifdef _WIN32
-        system("COLOR C");
-        fprintf(stderr,"[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
-        system("COLOR");
-        #else
-        fprintf(stderr,"\033[38;2;255;0;0m[E]ÄÚ´æ·ÖÅäÊ§°Ü£¡\033[0m\n");
-        #endif
-        free(newVar->name);
-        free(newVar);
-        return -1;
-    }
+    wcscpy(newVar->name,name);
     newVar->type = type;
     newVar->address = malloc(sizeof(double));
     if(!newVar->address) {
