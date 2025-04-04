@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include "HXC/dataStruct.h"
-
+#include "HXC/lexer.h"
 int main(void) {
-    
     initSymbol();
-    addVariable(L"newVariable",HXC_TYPE_INT,114514);
-    printf("Hello, World!\nnewVariable = %d\n",(int)getVariableValue(L"newVariable"));
+    printf("%ls\n",getData("src.hxl"));
+    printf("Hello,world!\n");
     cleanupSymbol();
     return 0;
 }
